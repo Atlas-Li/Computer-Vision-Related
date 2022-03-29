@@ -9,13 +9,14 @@ import turtle as t
 import random
 from datetime import datetime
 
+t.screensize(1280,210, "black")
 t.setup(1280, 720)
 
 while True:
     t.colormode(255)
-    t.color(random.randint(0, 255),
-          random.randint(0, 255),
-          random.randint(0, 255))
+    t.color(random.randint(255, 255),
+          random.randint(255, 255),
+          random.randint(255, 255))
     t.begin_fill()
     t.penup()
     t.setpos(t.pos()[0], t.pos()[1])
