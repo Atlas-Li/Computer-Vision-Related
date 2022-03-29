@@ -2,7 +2,7 @@
 """
 Created on Sun Mar 27 22:53:34 2022
 
-@author: atlas
+@author: Mingjun Li
 """
 
 import turtle as t
