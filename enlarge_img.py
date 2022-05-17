@@ -1,5 +1,6 @@
 from PIL import Image
 import numpy as np
+import argparse
 
 
 def enlarge_img(path, target_size, background):
@@ -10,9 +11,10 @@ def enlarge_img(path, target_size, background):
     # th = 1080
     # tw = 1920
     th, tw = target_size
-    if background == "black" or "b" or "B":
+    if background == "black" or background == "b" or background == "B":
         out = np.zeros([th, tw, c], dtype=np.uint8)
-    if background == "white" or "w" or "W":
+
+    if background == "white" or background == "w" or background == "W":
         out = np.ones([th, tw, c], dtype=np.uint8)
         out = out * 255
 
@@ -35,9 +37,47 @@ def enlarge_img(path, target_size, background):
     
     return out
 
+
+def get_argumets():
+    """
+        Parse arguments from command line
+    """
+
+    parser = argparse.ArgumentParser(description='Increase the size of an image without changing its center')
+
+    parser.add_argument('--imagePath',
+                        '-p', 
+                        type=str, 
+                        default='our_data/calibration/group10/kinect_ir_colorized/1.png',
+                        help='file path of the image.')
+    parser.add_argument('--targetHeight',
+                        '-t',
+                        type=int, 
+                        default=1080,
+                        help='Height of the output image.')
+    parser.add_argument('--targetWidth',
+                        '-w',
+                        type=int, 
+                        default=1920,
+                        help='Width of the output image.')
+    parser.add_argument('--background',
+                        '-b',
+                        type=str, 
+                        default='white',
+                        choices=['white', 'w', 'W', 'black', 'b', 'B'],
+                        help='color of increased area.')
+
+    return parser.parse_args()
+
+
 if __name__ == "__main__":
-    path = r'E:\Pycharm\project001\6D_Pose_Annotator\our_data\calibration\group10\kinect_ir_colorized\1.png'
-    out = enlarge_img(path, [1080, 1920], 'w')
+
+    args = get_argumets()
+
+    path = args.imagePath
+    out_size = [args.targetHeight, args.targetWidth]
+    bg = args.background
+    out = enlarge_img(path, out_size, 'b')
 
     out = Image.fromarray(out)
-    out.save('C:\\Users\\atlas\\Desktop\\tse.png')
+    out.show()
