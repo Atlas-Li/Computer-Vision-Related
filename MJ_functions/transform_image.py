@@ -52,7 +52,9 @@ def compute_trans_matrix(
     else:
         h2, w2 = img2_np.shape
 
+    logger.info("Load {}".format(large_image_path))
     logger.info("large image shape {}".format(img1_np.shape))
+    logger.info("Load {}".format(large_image_path))
     logger.info("small image shape {}".format(img2_np.shape))
 
     if method == 1:
@@ -165,12 +167,13 @@ if __name__ == "__main__":
 
     large_path = r'E:\Pycharm\project001\6D_Pose_Annotator\our_data\calibration\group10\kinect_color\6.png'
     # large_path = r'C:\Users\atlas\Desktop\grasp\1000\1000-shell0-c0-R\kinect_color\kinect_color_arc0_image7.png'
-    small_path = r'E:\Pycharm\project001\6D_Pose_Annotator\our_data\calibration\group10\kinect_ir_colorized\6.png'
-    # small_path = r'C:\Users\atlas\Desktop\grasp\1000\1000-shell0-c0-R\kinect_depth\kinect_depth_arc0_image7.png'
+    # small_path = r'E:\Pycharm\project001\6D_Pose_Annotator\our_data\calibration\group10\kinect_ir_colorized\6.png'
+    small_path = r'C:\Users\atlas\Pictures\Saved Pictures\009.jpg'
 
     img1_np, img2_np, trans_matrix = compute_trans_matrix(large_path, small_path, 3)
-    img_new = trans_img(img2_np, trans_matrix, 1080, 1920) # for method 1,3
-    # img_new = new_img_domain(img1_np, trans_matrix, 576, 640)   # for method 2
+
+    img_new = trans_img(img2_np, trans_matrix, img1_np.shape[0], img1_np.shape[1]) # for method 1,3
+    # img_new = trans_img(img1_np, trans_matrix, img2_np.shape[0], img2_np.shape[1])   # for method 2
     Image.fromarray(img_new).show()
 
 
